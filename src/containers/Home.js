@@ -8,19 +8,14 @@ export default class Home extends Component {
 
   renderContactList() {
     const { contact } = this.props.store;
-
-    if (!contact.fetchedContactList) {
-      getContacts(this.props.store);
-      return (
-        <div className="title is-info">Loading...</div>
-      );
-    }
     return (
       <Fragment>
         <h2 className="subtitle">
           {contact.contactList.map((item, index) => {
             return (
-              <div class="box" key={index}>
+              <div class="box" key={index} onClick={() => {
+                contact.selectedContact = index;
+              }}>
                 {item.name}
               </div>
             )
@@ -31,15 +26,23 @@ export default class Home extends Component {
   }
 
   renderContactDetail() {
+    const { contact } = this.props.store;
+    const currentContact = contact.contactList[contact.selectedContact];
     return (
       <div className="box">
-        Contact Details here
+        {currentContact.name}
       </div>
     );
   }
 
   render() {
-    const { ui } = this.props.store;
+    const { contact } = this.props.store;
+    if (!contact.fetchedContactList) {
+      getContacts(this.props.store);
+      return (
+        <div className="title is-info">Loading...</div>
+      );
+    }
     return (
       <Fragment>
         <div className="hero">
