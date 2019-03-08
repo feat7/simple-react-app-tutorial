@@ -12,6 +12,9 @@ class UIStore {
 
   @observable
   fetchedFromPersist = false;
+
+  @observable
+  isLoading = false;
 }
 
 export default UIStore;
